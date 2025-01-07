@@ -4,21 +4,27 @@ import java.util.Arrays;
 import java.util.function.BiFunction;
 
 public enum OperatorType {
-    ADD("+", "(x + y) -> x + y"),
-    DIVIDE("/", "(x + y) -> x / y"),
-    MULTIPLY("*", "(x + y) -> x * y"),
-    SUBTRACT("-", "(x + y) -> x - y");
+    ADD("+", (a, b) -> a + b),
+    DIVIDE("/", (a, b) -> a / b),
+    MULTIPLY("*", (a, b) -> a * b),
+    SUBTRACT("-", (a, b) -> a - b),
+    REMAIN("%", (a, b) -> a % b);
 
     private final String value;
-    private final String type;
+    private BiFunction<Double, Double, Double> operate;
 
-    OperatorType(String value, String type) {
+    OperatorType(String value, BiFunction<Double, Double, Double> operate) {
         this.value = value;
-        this.type = type;
+        this.operate = operate;
+
     }
 
     public String getValue() {
         return value;
+    }
+
+    public BiFunction<Double, Double, Double> getOperate() {
+        return operate;
     }
 
     public String getAllValue() {

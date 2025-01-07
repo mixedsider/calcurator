@@ -1,8 +1,5 @@
 package com.example.calculator.lv3;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.math.BigInteger;
 import java.util.function.BiFunction;
 
 public class ArithmeticCalculator <T extends Number> {
@@ -19,8 +16,8 @@ public class ArithmeticCalculator <T extends Number> {
     // 그렇기 때문에 람다 같은 형식에 매이지 않는 Operator나 Function 같은 명시적인 구조를 추가로 정의를 해야한다.
     public ArithmeticCalculator () {}
 
-    public T Calculate(T x, T y, BiFunction<T, T, T> operation) {
-        return operation.apply(x, y);
+    public T Calculate(T x, T y, BiFunction<Double, Double, Double> operation) {
+        return (T) operation.apply(x.doubleValue(), y.doubleValue());
     }
 
 //     default Calculator

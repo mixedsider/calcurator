@@ -1,4 +1,4 @@
-package com.example.calculator.lv2;
+package com.example.calculator.lv3;
 
 import java.util.Scanner;
 
@@ -18,20 +18,20 @@ public class App {
                 input = scanner.next();
             } while ( input.isBlank() );
 
-            // 마지막 로그 삭제하기
+            // 마지막  삭제하기
             if( input.equals("deleteLastIndex")) {
-                calculator.deleteListIndex();
+                calculator.deleteLastIndex();
                 continue;
             }
 
 //             로그 수정하기
-            if( input.equals("updateLog") ) {
+            if( input.equals("updateList") ) {
                 String[] list = calculator.showList();
                 for( int i = 0; i < list.length; i++ )
                     System.out.println(i + " " + list[i]);
                 int num = 0;
                 do {
-                    System.out.println("수정할 로그 번호를 입력해주세요. : ");
+                    System.out.println("수정할 리스트 번호를 입력해주세요. : ");
                     num = scanner.nextInt();
                 } while ( !(num >= 0) );
                 do {
@@ -47,7 +47,7 @@ public class App {
 
 
             // 로그 보여주기
-            if( input.equals("showLog")) {
+            if( input.equals("showList")) {
                 for( String str : calculator.showList() )
                     System.out.println(str);
                 continue;

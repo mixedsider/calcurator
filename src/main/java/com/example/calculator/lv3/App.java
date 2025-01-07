@@ -8,7 +8,7 @@ public class App {
         // 로그 랑 리스트 이름 둘중에 하나만 사용하기
 
         // 스트림 api 사용되는 부분이 실시간 데이터 처리하는 부분에서 사용이 됨
-        Calculator calculator = new Calculator();
+        Calculator<Double> calculator = new Calculator<>();
         Scanner scanner = new Scanner(System.in);
 
         String input;
@@ -38,7 +38,7 @@ public class App {
                     System.out.println("수정할 계산을 할 식을 입력해주세요 ex) 10*10");
                     input = scanner.next();
                 } while ( input.isBlank() );
-                if( !calculator.initalize(input) ) continue;
+                if( !calculator.initalize(input, Double::parseDouble) ) continue;
                 String result = calculator.calculate();
                 calculator.updateList(num , result);
                 System.out.println(result);
@@ -54,10 +54,17 @@ public class App {
             }
 
             // 계산하는 곳
-            if( !calculator.initalize(input) ) continue;
+            if( !calculator.initalize(input, Double::parseDouble) ) continue;
             String result = calculator.calculate();
             calculator.saveList();
             System.out.println(result);
         } while ( !input.equals("exit") );
     }
 }
+
+
+
+// 1. 사용자에게서 값을 입력을 받는다.
+// 2. 값을 확인한후 Integer, Double 인지 결정
+//  new ArithmeticCalculator<T>();
+// ArithmeticCalculator 안에서 Calculate() 동작

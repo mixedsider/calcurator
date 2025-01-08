@@ -6,8 +6,7 @@ import java.util.function.BiFunction;
 import java.util.regex.Pattern;
 
 public class Calculator<T extends Number> {
-    private StringBuilder sb = new StringBuilder();
-
+    // 계산할 값
     private T x;
     private T y;
     private OperatorType operatorType;
@@ -18,7 +17,6 @@ public class Calculator<T extends Number> {
     }
 
     public boolean initalize(String str, NumberParser<T> parser) {
-        sb.delete(0, sb.length());
         String[] strArray;
         String operator;
 
@@ -30,17 +28,20 @@ public class Calculator<T extends Number> {
                 if( operatorIndex != -1) break;
             }
 
+            // 연산자 기준으로 문자열 나누기
             if( operatorIndex == -1 ) throw new CalculatorIOException("타입이 없습니다.");
             operator = "" + str.charAt(operatorIndex); // 연산자 char -> String
             strArray = str.split(Pattern.quote(operator)); // Pattern 을 찾기
             strArray[0] = strArray[0].trim();
             strArray[1] = strArray[1].trim();
 
+            // 각 숫자 변환 전 형식 체크
             if (!(strArray[0].matches("^[0-9]*$") || strArray[1].matches("^[0-9]*$")))
                 throw new CalculatorIOException("잘못된 숫자 입력입니다.");
             x = parser.parse(strArray[0]); // String -> T
             y = parser.parse(strArray[1]);
 
+            // 계산에 필요한 정보 가져오기 Enum class
             operatorType = OperatorType.getBasicType(operator);
             if( strArray[1].equals("0") && operatorType == OperatorType.DIVIDE )
                 throw new CalculatorIOException("분모 에러");
@@ -55,18 +56,18 @@ public class Calculator<T extends Number> {
 
     // 계산기
     public String calculate() {
+        StringBuilder sb = new StringBuilder();
+        // 순수함수 계산식 가져오기 ( 람다 )
         BiFunction<Double, Double, Double> oper = operatorType.getOperate();
 
-        // double 로 계산 되어 와서 result 가 Integer을 입력해도 소수점이 나옴
-        // 결론적으론 sb 에서 값을 자르든, BiFunction 을 하나더 만들어서 만들든 해야한다.
         T result = (T) arithmeticCalculator.calculate(x, y, oper);
 
         // 계산 이후 빌드
-        this.sb.append(x).append(" " + operatorType.getValue() + " ").append(y);
+        sb.append(x).append(" ").append(operatorType.getValue()).append(" ").append(y);
         if (x.getClass() == Integer.class) { // x의 변수에 따라 계산의 값이 바뀜 -> Integer 면 정수, Double이면 실수
-            this.sb.append(" = ").append(Math.round((Double) result));
+            sb.append(" = ").append(Math.round((Double) result));
         } else
-            this.sb.append(" = ").append(result);
+            sb.append(" = ").append(result);
         return sb.toString();
     }
 }

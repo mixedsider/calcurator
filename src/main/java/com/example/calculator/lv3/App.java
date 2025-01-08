@@ -12,12 +12,12 @@ public class App {
         CalculateList calculateList = new CalculateList();
 
         String input;
+        System.out.println("리스트를 확인 하기 : showList");
+        System.out.println("리스트 중에 입력값 보다 큰 숫자 리스트 가져오기 : showBigList");
+        System.out.println("리스트 마지막 내용 삭제하기 : deleteLastIndex");
+        System.out.println("리스트 중에 내용 수정하기 : updateList");
+        System.out.println();
         do {
-            System.out.println("리스트를 확인 하기 : showList");
-            System.out.println("리스트 중에 입력값 보다 큰 숫자 리스트 가져오기 : showBigList");
-            System.out.println("리스트 마지막 내용 삭제하기 : deleteLastIndex");
-            System.out.println("리스트 중에 내용 수정하기 : updateList");
-            System.out.println();
             do {
                 System.out.println("계산을 할 식을 입력해주세요 ex) 10*10");
                 input = scanner.nextLine();
@@ -25,9 +25,16 @@ public class App {
 
             // 비교 대상보다 더 큰 숫자 알려주기
             if (input.equals("showBigList")) {
+                if (calculateList.getSize() == 0) {
+                    System.out.println("아직 리스트가 없습니다.");
+                    continue;
+                }
                 do {
+                    calculateList.showList();
                     System.out.println("비교 숫자를 입력해주세요. : ");
                     input = scanner.nextLine();
+                    // 숫자만 들어가있는가
+                    if (!input.matches("^[0-9]*$")) input = "";
                 } while (input.isBlank());
                 calculateList.showBiggerList(input);
                 continue;
@@ -49,7 +56,7 @@ public class App {
             int num = -1;
             if (input.equals("updateList")) {
                 if (calculateList.getSize() == 0) {
-                    System.out.println("아직 수정할 리스트가 없습니다.");
+                    System.out.println("아직 리스트가 없습니다.");
                     continue;
                 }
                 calculateList.showList();
@@ -57,6 +64,7 @@ public class App {
                 do {
                     System.out.println("수정할 리스트 번호를 입력해주세요. : ");
                     String temp = scanner.nextLine();
+                    // 숫자면 변환
                     if (temp.matches("^[0-9]*$"))
                         num = Integer.parseInt(temp);
                 } while (!(num >= 0));

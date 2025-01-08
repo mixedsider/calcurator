@@ -59,7 +59,6 @@ public class App {
                     if (!calculator.initalize(input, Integer::parseInt))
                         throw new CalculatorIOException();
 
-
                 }
                 result = calculator.calculate();
             } catch (CalculatorIOException e) {

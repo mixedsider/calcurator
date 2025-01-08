@@ -15,8 +15,17 @@ public class App {
         do {
             do {
                 System.out.println("계산을 할 식을 입력해주세요 ex) 10*10");
-                input = scanner.next();
+                input = scanner.nextLine();
             } while (input.isBlank());
+
+            if (input.equals("showBiggerList")) {
+                do {
+                    System.out.println("비교 숫자를 입력해주세요. : ");
+                    input = scanner.nextLine();
+                } while (input.isBlank());
+                calculateList.showBiggerList(input);
+                continue;
+            }
 
             // 로그 보여주기
             if (input.equals("showList")) {
@@ -42,7 +51,7 @@ public class App {
 
                 do {
                     System.out.println("수정할 계산을 할 식을 입력해주세요 ex) 10*10");
-                    input = scanner.next();
+                    input = scanner.nextLine();
                 } while (input.isBlank());
             }
 

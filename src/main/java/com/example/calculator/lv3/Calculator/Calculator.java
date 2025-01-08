@@ -22,8 +22,8 @@ public class Calculator<T extends Number> {
         String[] strArray;
         String operator;
 
-        // 연산자 찾기
         try {
+            // 연산자 찾기
             int operatorIndex = -1;
             for( OperatorType o : OperatorType.values() ) {
                 operatorIndex = str.indexOf(o.getValue());
@@ -34,12 +34,10 @@ public class Calculator<T extends Number> {
             operator = "" + str.charAt(operatorIndex); // 연산자 char -> String
             strArray = str.split(Pattern.quote(operator)); // Pattern 을 찾기
 
-
-            sb.append(str);
-            if (strArray[0].matches("^[0-9]*$") || strArray[1].matches("^[0-9]*$"))
+            if (!(strArray[0].matches("^[0-9]*$") || strArray[1].matches("^[0-9]*$")))
                 throw new CalculatorIOException("잘못된 숫자 입력입니다.");
-            x = parser.parse(strArray[0]); // String -> T
-            y = parser.parse(strArray[1]);
+            x = parser.parse(strArray[0].trim()); // String -> T
+            y = parser.parse(strArray[1].trim());
 
             operatorType = OperatorType.getBasicType(operator);
             if( strArray[1].equals("0") && operatorType == OperatorType.DIVIDE )
@@ -61,7 +59,9 @@ public class Calculator<T extends Number> {
         // 결론적으론 sb 에서 값을 자르든, BiFunction 을 하나더 만들어서 만들든 해야한다.
         T result = (T) arithmeticCalculator.calculate(x, y, oper);
 
-        if (x.getClass() == Integer.class) { // 계산이 되는 것이
+        // 계산 이후 빌드
+        this.sb.append(x).append(" " + operatorType.getValue() + " ").append(y);
+        if (x.getClass() == Integer.class) { // x의 변수에 따라 계산의 값이 바뀜 -> Integer 면 정수, Double이면 실수
             this.sb.append(" = ").append(Math.round((Double) result));
         } else
             this.sb.append(" = ").append(result);

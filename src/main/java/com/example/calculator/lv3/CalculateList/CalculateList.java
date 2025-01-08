@@ -37,4 +37,11 @@ public class CalculateList {
     public void deleteLastIndex() {
         this.list.remove(list.size() - 1);
     }
+
+    public void showBiggerList(String number) {
+        double num = Double.parseDouble(number);
+        list.stream().filter(item ->
+                        Double.parseDouble(item.split("=")[1].trim()) > num)
+                .forEach(System.out::println);
+    }
 }

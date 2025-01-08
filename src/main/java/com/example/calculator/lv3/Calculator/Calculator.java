@@ -33,11 +33,13 @@ public class Calculator<T extends Number> {
             if( operatorIndex == -1 ) throw new CalculatorIOException("타입이 없습니다.");
             operator = "" + str.charAt(operatorIndex); // 연산자 char -> String
             strArray = str.split(Pattern.quote(operator)); // Pattern 을 찾기
+            strArray[0] = strArray[0].trim();
+            strArray[1] = strArray[1].trim();
 
             if (!(strArray[0].matches("^[0-9]*$") || strArray[1].matches("^[0-9]*$")))
                 throw new CalculatorIOException("잘못된 숫자 입력입니다.");
-            x = parser.parse(strArray[0].trim()); // String -> T
-            y = parser.parse(strArray[1].trim());
+            x = parser.parse(strArray[0]); // String -> T
+            y = parser.parse(strArray[1]);
 
             operatorType = OperatorType.getBasicType(operator);
             if( strArray[1].equals("0") && operatorType == OperatorType.DIVIDE )

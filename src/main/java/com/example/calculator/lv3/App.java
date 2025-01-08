@@ -1,73 +1,75 @@
 package com.example.calculator.lv3;
 
+import com.example.calculator.lv3.CalculateList.CalculateList;
+import com.example.calculator.lv3.Calculator.Calculator;
+
 import java.util.Scanner;
 
 public class App {
 
     public static void main(String[] args) {
-        // 로그 랑 리스트 이름 둘중에 하나만 사용하기
+        Scanner scanner = new Scanner(System.in);
+        CalculateList calculateList = new CalculateList();
 
-        // 스트림 api 사용되는 부분이 실시간 데이터 처리하는 부분에서 사용이 됨
-        Calculator<Integer> calculator = new Calculator<>();
-        calculator.initalize("10%10", Integer::parseInt);
+        String input;
+        do {
+            do {
+                System.out.println("계산을 할 식을 입력해주세요 ex) 10*10");
+                input = scanner.next();
+            } while (input.isBlank());
 
-        calculator.calculate();
-//        Scanner scanner = new Scanner(System.in);
-//
-//        String input;
-//        do {
-//            do {
-//                System.out.println("계산을 할 식을 입력해주세요 ex) 10*10");
-//                input = scanner.next();
-//            } while ( input.isBlank() );
-//
-//            // 마지막  삭제하기
-//            if( input.equals("deleteLastIndex")) {
-//                calculator.deleteLastIndex();
-//                continue;
-//            }
-//
-////             로그 수정하기
-//            if( input.equals("updateList") ) {
-//                String[] list = calculator.showList();
-//                for( int i = 0; i < list.length; i++ )
-//                    System.out.println(i + " " + list[i]);
-//                int num = 0;
-//                do {
-//                    System.out.println("수정할 리스트 번호를 입력해주세요. : ");
-//                    num = scanner.nextInt();
-//                } while ( !(num >= 0) );
-//                do {
-//                    System.out.println("수정할 계산을 할 식을 입력해주세요 ex) 10*10");
-//                    input = scanner.next();
-//                } while ( input.isBlank() );
-//                if( !calculator.initalize(input, Double::parseDouble) ) continue;
-//                calculator.calculate();
-////                calculator.updateList(num , result);
-////                System.out.println(result);
-//                continue;
-//            }
-//
-//
-//            // 로그 보여주기
-//            if( input.equals("showList")) {
-//                for( String str : calculator.showList() )
-//                    System.out.println(str);
-//                continue;
-//            }
-//
-//            // 계산하는 곳
-//            if( !calculator.initalize(input, Double::parseDouble) ) continue;
-//            calculator.calculate();
-//            calculator.saveList();
-////            System.out.println(result);
-//        } while ( !input.equals("exit") );
+            // 로그 보여주기
+            if (input.equals("showList")) {
+                calculateList.showList();
+                continue;
+            }
+
+            // 마지막 삭제하기
+            if (input.equals("deleteLastIndex")) {
+                calculateList.deleteLastIndex();
+                continue;
+            }
+
+//             로그 수정하기
+            int num = -1;
+            if (input.equals("updateList")) {
+                calculateList.showList();
+
+                do {
+                    System.out.println("수정할 리스트 번호를 입력해주세요. : ");
+                    num = scanner.nextInt();
+                } while (!(num >= 0));
+
+                do {
+                    System.out.println("수정할 계산을 할 식을 입력해주세요 ex) 10*10");
+                    input = scanner.next();
+                } while (input.isBlank());
+            }
+
+
+            // 계산하는 곳
+            String result = "";
+            try {
+                Calculator<Number> calculator = new Calculator<>();
+                if (input.contains(".")) { // 입력받는 것에 . 이 포함되어있나 => Double
+                    if (!calculator.initalize(input, Double::parseDouble))
+                        throw new CalculatorIOException();
+
+                } else {
+                    if (!calculator.initalize(input, Integer::parseInt))
+                        throw new CalculatorIOException();
+
+
+                }
+                result = calculator.calculate();
+            } catch (CalculatorIOException e) {
+                System.out.println(e.getMessage());
+            }
+
+            System.out.println(result);
+            if (num >= 0) calculateList.updateList(num, result);
+            else calculateList.saveList(result);
+
+        } while (!input.equals("exit"));
     }
 }
-
-
-
-// 1. 사용자에게서 값을 입력을 받는다.
-// 2. 값을 확인한후 Integer, Double 인지 결정
-//  new ArithmeticCalculator<T>();
-// ArithmeticCalculator 안에서 Calculate() 동작

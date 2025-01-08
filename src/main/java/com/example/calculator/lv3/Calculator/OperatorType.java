@@ -1,4 +1,4 @@
-package com.example.calculator.lv3;
+package com.example.calculator.lv3.Calculator;
 
 import java.util.Arrays;
 import java.util.function.BiFunction;
@@ -25,10 +25,6 @@ public enum OperatorType {
 
     public BiFunction<Double, Double, Double> getOperate() {
         return operate;
-    }
-
-    public String getAllValue() {
-        return Arrays.toString(OperatorType.values());
     }
 
     public static OperatorType getBasicType(String str) {

@@ -16,6 +16,7 @@ public class App {
         System.out.println("리스트 중에 입력값 보다 큰 숫자 리스트 가져오기 : showBigList");
         System.out.println("리스트 마지막 내용 삭제하기 : deleteLastIndex");
         System.out.println("리스트 중에 내용 수정하기 : updateList");
+        System.out.println("프로그램 종료 : exit");
         System.out.println();
         do {
             do {

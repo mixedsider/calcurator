@@ -11,13 +11,15 @@ public class App {
         String input;
 
         while (true) {
+            // 피연산자1 or 명령어 입력
             do {
                 System.out.println("숫자를 입력해주세요. : ");
                 input = scanner.next();
-                if( input.equals("exit") ) return;
+                if (input.equals("exit")) return; // exit 입력시 프로램 종료
             } while ( !(Long.parseLong(input) > 0 || input.isEmpty()) );
             number1 = Long.parseLong(input);
 
+            // 기호 입력
             do {
                 System.out.println("기호를 입력해주세요. : ");
                 input = scanner.next();
@@ -25,6 +27,7 @@ public class App {
             } while ( input.isBlank() || !(input.charAt(0) == '+' || input.charAt(0) == '-' || input.charAt(0) == '/' || input.charAt(0) == '*') );
             operation = input.charAt(0);
 
+            // 피연산자2 입력
             do {
                 System.out.println("숫자를 입력해주세요. : ");
                 input = scanner.next();
@@ -32,6 +35,7 @@ public class App {
             } while ( !(Long.parseLong(input) > 0 || input.isEmpty()) );
             number2 = Long.parseLong(input);
 
+            // 계산
             switch (operation) {
                 case '+':
                     System.out.println(number1 + number2);

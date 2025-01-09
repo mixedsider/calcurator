@@ -24,6 +24,7 @@ public class CalculateList {
 
     /*리스트 중에 하나 가져오기*/
     public String getListIndex(int num) {
+        if (list.size() - 1 < num) return null;
         System.out.println(list.get(num));
         return list.get(num);
     }

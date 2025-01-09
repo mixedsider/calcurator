@@ -16,7 +16,7 @@ public class Calculator<T extends Number> {
     public Calculator() {
     }
 
-    public boolean initalize(String str, NumberParser<T> parser) {
+    public boolean initialize(String str, NumberParser<T> parser) {
         String[] strArray;
         String operator;
 
@@ -49,9 +49,9 @@ public class Calculator<T extends Number> {
                 throw new CalculatorIOException("operatorType 에러");
         } catch (CalculatorIOException e) {
             System.out.println(e.getMessage());
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
 
     // 계산기
